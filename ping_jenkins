@@ -1,0 +1,36 @@
+pipeline {
+    agent any  // This specifies that the pipeline can run on any available Jenkins agent.
+
+    environment {
+        GITHUB_REPO = 'https://github.com/ranjith01804/ansible-jankins.git'
+        PLAYBOOK_PATH = 'ping.yaml'  
+        INVENTORY_FILE = 'inventory'  
+    }
+
+    stages {
+        stage('Checkout Repository') {
+            steps {
+                git branch: 'ping_module', url: "${GITHUB_REPO}"
+            }
+        }
+
+        stage('Run Ansible Playbook') {
+            steps {
+                script {
+                    sh """
+                    ansible-playbook -i ${INVENTORY_FILE} ${PLAYBOOK_PATH}
+                    """
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Ansible playbook executed successfully.'
+        }
+        failure {
+            echo 'Ansible playbook execution failed.'
+        }
+    }
+}
