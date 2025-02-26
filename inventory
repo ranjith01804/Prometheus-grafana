@@ -1,2 +1,2 @@
 [worker]
-172.31.5.55
+172.31.7.2 ec2_user=ubuntu
