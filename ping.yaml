@@ -1,0 +1,9 @@
+---
+- name: Ping all hosts
+  hosts: all
+  become: yes  # Use privilege escalation (sudo)
+  gather_facts: yes  # Gather facts (system information)
+
+  tasks:
+    - name: Ping the host
+      ansible.builtin.ping:
